@@ -8,7 +8,7 @@ class Account:
         self.balance = random.randint(500, 2500)
 
     def display_balance(self):
-        print(f"Your current balance is: ${self.balance}")
+        print(f"\nYour current balance is: ${self.balance}")
 
     def withdraw(self, amount):
         if amount <= 0:
@@ -39,5 +39,14 @@ class Account:
         self.display_balance()
         print(f"{account.username} balance is: ${account.balance}")
 
+    def change_password(self, old ,new):
+        if old != self.password:
+            print("Invalid old password.")
+        else:
+            self.password = new
+            print(f"You update your password.")
+
+
     def exit(self):
         print(f"Goodbye, {self.username}!")
+        exit(0)

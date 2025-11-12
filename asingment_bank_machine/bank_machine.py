@@ -1,5 +1,7 @@
 from asingment_bank_machine.account import Account
-
+import utils
+import slowio
+from pr_text import *
 
 # -------------------------------------
 # 🔹 Initialization
@@ -19,29 +21,30 @@ class BankMachine:
 # -------------------------------------
 
     def run(self):
-        print("\n" + "=" * 40)
-        print("💳 Welcome to the Bank Machine 💳")
-        print("=" * 40)
+        slowio.enable()
+        for line in welcome:
+            print(line)
 
         while True:
             username = input("\nEnter your username: ")
             password = input("Enter your password: ")
+            print()
             sing_in = False
             for account in self.accounts:
 
                 if username == account.username and account.password == password:
-                    print(f"\nLogin successful! Welcome, {username}.")
+                    utils.loading_animation("try to login",f"Login successful! Welcome, {username}.")
                     account = Account(username, password)
                     self.main_menu(account)
                     sing_in = True
                     break
 
             if not sing_in:
-                print("Incorrect username or password.")
+                utils.loading_animation("try to login","Incorrect username or password.")
                 again = input("\nTry again? (y/n): ").lower()
 
                 if again != "y":
-                    print("Exiting ATM...")
+                    utils.loading_animation("Exiting ATM", 0)
                     exit(0)
 
     def logout(self, account):
@@ -57,22 +60,19 @@ class BankMachine:
         while True:
             print("\n" + "=" * 40)
             print(f"🏦 Welcome, {account.username}")
-            print("=" * 40)
-            print("1️⃣  Display Balance         4️⃣  Transfer")
-            print("2️⃣  Withdraw                5️⃣  Get History")
-            print("3️⃣  Deposit                 6️⃣  Change Password")
-            print("7️⃣  Logout                  8️⃣  Exit")
-            print("=" * 40)
+            for line in menu:
+                print(line)
 
             choice = input("Enter choice (1-8): ").strip()
-            print()
+            utils.loading_animation(completion_message=' ')
 
             match choice:
                 case "1":
                     account.display_balance()
+                    utils.timer()
 
                 case "2":
-                    amount = float(input("Enter amount to withdraw: "))
+                    amount = float(input("Enter amount to withdraw: ", ))
                     account.withdraw(amount) if amount > 0 else 0
 
                 case "3":
@@ -102,6 +102,7 @@ class BankMachine:
 
                 case "8":
                     account.exit()
+                    slowio.disable()
 
                 case _:
                     print("Invalid option, try again.")

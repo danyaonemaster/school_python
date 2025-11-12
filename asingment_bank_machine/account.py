@@ -1,4 +1,5 @@
 import random
+import utils
 
 
 class Account:
@@ -9,7 +10,7 @@ class Account:
         self.history = []
 
     def display_balance(self):
-        print(f"\nYour current balance is: ${self.balance}")
+        print(f"Your current balance is: ${self.balance}")
 
     def withdraw(self, amount, silent=False):
         if amount <= 0:
@@ -46,7 +47,7 @@ class Account:
             return
         self.balance += amount
         if not silent:
-            print(f"Deposit successful! New balance: ${self.balance:.2f}")
+            print("Deposit successful! New balance: ${self.balance:.2f}")
         self.history.append(f"Deposit: +${amount}")
 
     def transfer(self, amount, account):
@@ -62,8 +63,8 @@ class Account:
         return 1
 
     def get_summary(self):
-        print(f"\n👤 Account Summary for {self.username}")
-        print(f"🏦 Current Balance: ${self.balance:.2f}")
+        print("\n👤 Account Summary for {self.username}")
+        print("🏦 Current Balance: ${self.balance:.2f}")
         print("🕒 Last 3 transactions:\n")
 
         if not self.history:
@@ -85,5 +86,5 @@ class Account:
         print("Password updated successfully!")
 
     def exit(self):
-        print(f"Goodbye, {self.username}!")
+        utils.loading_animation("ATM exiting", f"Goodbye, {self.username}!")
         exit(0)

@@ -1,6 +1,22 @@
-# -------------------------------
-# LOADING ANIMATION (rotating dots)
-# -------------------------------
+"""
+loading.py – Loading Animations & Timer Utilities
+
+This module provides simple visual terminal effects used in CLI programs:
+    - loading_animation: displays a rotating dot animation with a message
+    - timer: introduces a fixed delay (4 seconds)
+
+Features:
+    • Non-blocking animation using threading
+    • Customizable loading message, completion message, and duration
+    • Smooth terminal refresh using carriage return
+
+Usage:
+    from loading import loading_animation, timer
+
+    loading_animation("Saving data", "Saved!", duration=5)
+    timer()  # waits 4 seconds
+"""
+
 import itertools
 import threading
 import time

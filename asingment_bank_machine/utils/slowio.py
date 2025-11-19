@@ -1,3 +1,20 @@
+"""
+slowtext.py – Slow Text Effects for Python
+
+This module provides functions that simulate slow typing effects,
+often used in games, visual novels, and interactive terminals.
+
+Features:
+    - slow_print: prints text character-by-character with delays
+    - slow_input: prints the prompt slowly, then reads user input
+    - enable: replaces built-in print and input to enable slow mode globally
+
+Usage:
+    from slowtext import enable
+    enable()
+    print("Hello!")   # Will print slowly
+"""
+
 import builtins
 import sys
 import time

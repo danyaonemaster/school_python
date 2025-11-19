@@ -4,7 +4,24 @@ from asingment_bank_machine.utils import utils
 
 
 class Account:
+    """
+    Represents a user bank account.
+
+    Stores balance, username, password and transaction history.
+    Provides operations such as withdraw, deposit, transfer, and summary report.
+    """
+
     def __init__(self, username, password):
+        """
+        Initialize a new account.
+
+        Args:
+            username (str): Account username.
+            password (str): Account password.
+
+        Notes:
+            The starting balance is randomly assigned between 500–2500.
+        """
         # Basic account data
         self.username = username
         self.password = password
@@ -16,10 +33,27 @@ class Account:
         self.history = []
 
     def display_balance(self):
+        """
+         Display the user's current account balance.
+         """
         # Simply prints the current balance
         print(f"Your current balance is: ${self.balance}")
 
     def withdraw(self, amount, silent=False):
+        """
+        Withdraw money from the account.
+
+        Args:
+            amount (float): Amount to withdraw.
+            silent (bool): If True, no printed messages will appear.
+
+        Returns:
+            int: 1 if withdrawal successful, 0 if failed.
+
+        Behavior:
+            - Applies overdraft fee (20%) if balance goes below zero.
+            - Prevents balance from going below –500.
+        """
         # Check for invalid withdrawal
         if amount <= 0:
             Account.print("Invalid amount.", silent)
@@ -59,6 +93,16 @@ class Account:
         return 1
 
     def deposit(self, amount, silent=False):
+        """
+        Deposit money into the account.
+
+        Args:
+            amount (float): The amount to deposit.
+            silent (bool): If True, no printed output.
+
+        Notes:
+            Rejects negative or zero deposits.
+        """
         # Invalid deposit check
         if amount <= 0:
             Account.print("Invalid deposit amount.", silent)
@@ -72,6 +116,21 @@ class Account:
         self.history.append(f"Deposit: +${amount}")
 
     def transfer(self, amount, account):
+        """
+        Transfer funds from this account to another.
+
+        Args:
+            amount (float): Transfer amount.
+            account (Account): Recipient account object.
+
+        Returns:
+            int: 1 if successful, 0 if failed.
+
+        Behavior:
+            - Performs a silent withdrawal.
+            - Deposits into the target account.
+            - Records the transaction in both histories.
+        """
         # Try to withdraw from the sender (silent mode prevents extra messages)
         if self.withdraw(amount, silent=True) == 0:
             print("Transfer failed! Not enough funds.")
@@ -88,6 +147,13 @@ class Account:
         return 1
 
     def get_summary(self):
+        """
+        Print a summary of the account status.
+
+        Shows:
+            - Current balance
+            - Last three transactions (newest first)
+        """
         # Show account summary and last 3 transactions
         print(f"\n👤 Account Summary for {self.username}")
         print(f"🏦 Current Balance: ${self.balance:.2f}")
@@ -101,6 +167,17 @@ class Account:
                 print(f" - {transaction}")
 
     def change_password(self, old, new):
+        """
+        Change the account password.
+
+        Args:
+            old (str): Current password.
+            new (str): New password.
+
+        Notes:
+            - Rejects incorrect old password.
+            - Rejects empty new password.
+        """
         # Verify old password
         if old != self.password:
             print("Invalid old password.")
@@ -116,6 +193,11 @@ class Account:
         print("Password updated successfully!")
 
     def exit(self):
+        """
+        Exit the ATM system.
+
+        Plays a loading animation and terminates the program.
+        """
         # Play animation and exit program
         utils.loading_animation("ATM exiting", f"Goodbye, {self.username}!")
         exit(0)
@@ -123,8 +205,11 @@ class Account:
     @staticmethod
     def print(message: str, silent: bool):
         """
-        Prints a message only if silent=False.
-        Useful for operations where we want to hide intermediate output.
+        Print a message unless silent=True.
+
+        Args:
+            message (str): Text to print.
+            silent (bool): If True, suppress printing.
         """
         if not silent:
             print(message)

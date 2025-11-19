@@ -27,10 +27,14 @@ class BankMachine:
 
     def run(self):
         """
-        Start the ATM interface:
-        - Enables slow text printing
-        - Displays welcome text
-        - Handles login attempts
+        Run the ATM system.
+
+        Handles the login loop:
+        - Prompts the user for username and password.
+        - Verifies authentication.
+        - Redirects to the main menu after successful login.
+
+        Loops until the user logs in correctly or exits.
         """
         slowio.enable()
 
@@ -81,9 +85,15 @@ class BankMachine:
 
     def logout(self, account):
         """
-        Logs the user out. Asks for confirmation.
-        If yes → restarts ATM
-        If no → returns back to main menu
+        Log the user out of the system.
+
+        Args:
+            account (Account): The currently logged-in user.
+
+        Behavior:
+        - Confirms logout.
+        - Returns to login menu if confirmed.
+        - Otherwise returns to main menu.
         """
         logout = input("\nDo you really want to logout? (y/n): ").lower()
 
@@ -99,9 +109,21 @@ class BankMachine:
 
     def main_menu(self, account):
         """
-        Displays the main ATM menu and handles user choices.
-        Calls the appropriate Account methods.
-        """
+         Display and handle the main ATM menu.
+
+         Args:
+             account (Account): The currently logged-in account.
+
+         Allows user to:
+         - Check balance
+         - Withdraw
+         - Deposit
+         - Transfer funds
+         - View last transactions
+         - Change password
+         - Logout
+         - Exit program
+         """
         while True:
             print("\n" + "=" * 40)
             print(f"🏦 Welcome, {account.username}")
@@ -171,9 +193,15 @@ class BankMachine:
 
     def find_account(self, username):
         """
-        Search for an account by username.
+        Find an account by username.
+
+        Args:
+            username (str): Username to search for.
+
         Returns:
-            Account object if found, else None.
+            Account | None:
+                - Account object if found
+                - None if not found
         """
         for acc in self.accounts:
             if acc.username == username:

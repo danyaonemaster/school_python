@@ -59,12 +59,6 @@ class BankMachine:
                     utils.loading_animation("try to login",
                                             f"Login successful! Welcome, {username}.")
 
-                    # IMPORTANT:
-                    # This creates a NEW account object every login.
-                    # Original history/balance are lost.
-                    # (This might be a bug, but kept unchanged as requested.)
-                    account = Account(username, password)
-
                     # Enter main menu
                     self.main_menu(account)
                     sing_in = True
